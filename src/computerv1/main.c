@@ -4,6 +4,8 @@
 #include "computerv1/style.h"
 #include "computerv1/options.h"
 #include "computerv1/parse_option_args.h"
+#include "computerv1/ast.h"
+#include "computerv1/parse_equation_arg.h"
 
 int g_fail_malloc_at = 0;
 
@@ -49,5 +51,14 @@ int main(int argc, char *argv[])
 		print_help(argv[0]);
 		return 0;
 	}
+	ast_node *ast = parse_equation_arg(argv[argc - 1]);
+	if (ast == NULL) {
+		return 3;
+	}
+	if (options.tree) {
+		print_ast(ast);
+	} else {
+	}
+	free_ast(ast);
 	return 0;
 }
