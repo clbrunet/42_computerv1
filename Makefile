@@ -1,9 +1,10 @@
 NAME = computer
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I./src/ -O0 -ggdb -Wno-unused-function -fsanitize=address
 
-SRCS = src/main.c
+SRCS = src/computerv1/main.c \
+			 src/computerv1/parse_option_args.c
 
 OBJS = $(SRCS:.c=.o)
 
