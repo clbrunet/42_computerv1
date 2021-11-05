@@ -18,6 +18,67 @@ ast_node *ast_node_new(token token, double value, ast_node *left, ast_node *righ
 	return new;
 }
 
+ast_node *ast_node_dup(ast_node *node)
+{
+	ast_node *dup = ast_node_new(node->token, node->value, NULL, NULL);
+	if (dup == NULL) {
+		return (NULL);
+	}
+	if (node->left) {
+		dup->left = ast_node_dup(node->left);
+		if (dup->left == NULL) {
+			free_ast(dup);
+			return (NULL);
+		}
+	}
+	if (node->right) {
+		dup->right = ast_node_dup(node->right);
+		if (dup->right == NULL) {
+			free_ast(dup);
+			return (NULL);
+		}
+	}
+	return dup;
+}
+
+ast_node *ast_node_cpy(ast_node *dest, ast_node *src)
+{
+	dest->token = src->token;
+	dest->value = src->value;
+	if (src->left) {
+		if (dest->left) {
+			if (ast_node_cpy(dest->left, src->left) == NULL) {
+				return NULL;
+			}
+		} else {
+			dest->left = ast_node_dup(src->left);
+			if (dest->left == NULL) {
+				return NULL;
+			}
+		}
+	} else {
+		free_ast(dest->left);
+		dest->left = NULL;
+	}
+	if (src->right) {
+		if (dest->right) {
+			ast_node_cpy(dest->right, src->right);
+			if (ast_node_cpy(dest->right, src->right) == NULL) {
+				return NULL;
+			}
+		} else {
+			dest->right = ast_node_dup(src->right);
+			if (dest->right == NULL) {
+				return NULL;
+			}
+		}
+	} else {
+		free_ast(dest->right);
+		dest->right = NULL;
+	}
+	return dest;
+}
+
 void set_ast_node(ast_node *node, token token, double value,
 		ast_node *left, ast_node *right)
 {
@@ -122,6 +183,14 @@ void free_ast(ast_node *node)
 	free_ast(node->left);
 	free_ast(node->right);
 	free(node);
+}
+
+void free_ast_childs(ast_node *ast)
+{
+	free_ast(ast->left);
+	ast->left = NULL;
+	free_ast(ast->right);
+	ast->right = NULL;
 }
 
 static char *node_token_to_string(ast_node *node)

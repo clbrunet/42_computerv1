@@ -193,6 +193,58 @@ static ast_node *parse_equation(char *arg, int *index_ptr)
 	return equation;
 }
 
+bool has_variables_in_parenthesis(char *arg)
+{
+	int parenthesis = 0;
+	while (*arg != '\0') {
+		if (*arg == '(') {
+			parenthesis++;
+		} else if (*arg == ')') {
+			parenthesis--;
+		} else if (*arg == 'X') {
+			if (parenthesis > 0) {
+				return true;
+			}
+		}
+		arg++;
+	}
+	return false;
+}
+
+static bool contain_variable(ast_node *node)
+{
+	if (node == NULL) {
+		return false;
+	}
+	if (node->token == VARIABLE) {
+		return true;
+	}
+	if (contain_variable(node->left)) {
+		return true;
+	}
+	if (contain_variable(node->right)) {
+		return true;
+	}
+	return false;
+}
+
+bool has_division_by_variables(ast_node *node)
+{
+	if (node == NULL) {
+		return false;
+	}
+	if (node->token == DIVISION && contain_variable(node->right)) {
+		return true;
+	}
+	if (has_division_by_variables(node->left)) {
+		return true;
+	}
+	if (has_division_by_variables(node->right)) {
+		return true;
+	}
+	return false;
+}
+
 ast_node *parse_equation_arg(char *arg)
 {
 	char *unexpected_token = strfind_first_not_of(arg, " =+-*/^0123456789.X()");
@@ -212,6 +264,15 @@ ast_node *parse_equation_arg(char *arg)
 			printf("%s\n", arg);
 			printf(BOLD FG_GREEN "%*c\n" RESET_ALL, index + 1, '^');
 		}
+		return NULL;
+	}
+	if (has_variables_in_parenthesis(arg)) {
+		fprintf(stderr, "Does not support variable in parenthesis\n");
+		free_ast(equation);
+		return NULL;
+	} else if (has_division_by_variables(equation)) {
+		fprintf(stderr, "Does not support division by variables.\n");
+		free_ast(equation);
 		return NULL;
 	}
 	return equation;

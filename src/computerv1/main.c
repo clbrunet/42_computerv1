@@ -6,6 +6,7 @@
 #include "computerv1/parse_option_args.h"
 #include "computerv1/ast.h"
 #include "computerv1/parse_equation_arg.h"
+#include "computerv1/reduce_ast.h"
 
 int g_fail_malloc_at = 0;
 
@@ -58,6 +59,17 @@ int main(int argc, char *argv[])
 	if (options.tree) {
 		print_ast(ast);
 	} else {
+		if (reduce_ast(ast) == -1) {
+			free_ast(ast);
+			return 3;
+		}
+		char *string = ast_to_string(ast, NULL);
+		if (string == NULL) {
+			free_ast(ast);
+			return 4;
+		}
+		printf("%s\n", string);
+		free(string);
 	}
 	free_ast(ast);
 	return 0;
