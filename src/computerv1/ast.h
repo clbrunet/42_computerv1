@@ -2,6 +2,7 @@
 #define COMPUTERV1_AST_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef enum token {
 	EQUALITY,
@@ -32,5 +33,6 @@ void print_ast(ast_node *node);
 void free_ast(ast_node *node);
 void free_ast_childs(ast_node *ast);
 char *ast_to_string(ast_node *node, ast_node *parent);
+bool contains_variable(ast_node *node);
 
 #endif

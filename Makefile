@@ -4,9 +4,11 @@ CC = clang
 CFLAGS = -Wall -Wextra -Werror -I./src/ -O0 -ggdb -Wno-unused-function -fsanitize=address
 
 SRCS = src/computerv1/main.c \
+			 src/computerv1/utils.c \
 			 src/computerv1/ast.c \
 			 src/computerv1/parse_equation_arg.c \
 			 src/computerv1/parse_option_args.c \
+			 src/computerv1/coefficient_node.c \
 			 src/computerv1/reduce_ast.c \
 			 src/computerv1/strings.c
 

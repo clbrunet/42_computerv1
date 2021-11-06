@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include "computerv1/main.h"
 #include "computerv1/style.h"
@@ -9,7 +10,7 @@ ast_node *ast_node_new(token token, double value, ast_node *left, ast_node *righ
 {
 	ast_node *new = xmalloc(sizeof(ast_node));
 	if (new == NULL) {
-		return (NULL);
+		return NULL;
 	}
 	new->token = token;
 	new->value = value;
@@ -269,3 +270,21 @@ char *ast_to_string(ast_node *node, ast_node *parent)
 	}
 	return string;
 }
+
+bool contains_variable(ast_node *node)
+{
+	if (node == NULL) {
+		return false;
+	}
+	if (node->token == VARIABLE) {
+		return true;
+	}
+	if (contains_variable(node->left)) {
+		return true;
+	}
+	if (contains_variable(node->right)) {
+		return true;
+	}
+	return false;
+}
+

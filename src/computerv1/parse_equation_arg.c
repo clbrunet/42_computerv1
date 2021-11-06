@@ -71,7 +71,7 @@ static ast_node *parse_exponent(char *arg, int *index_ptr)
 			free_ast(exponent);
 			return NULL;
 		}
-		if (rhs->token != NUMBER || !is_integer(rhs->value)) {
+		if (rhs->token != NUMBER || !is_integer(rhs->value) || rhs->value < 0) {
 			*index_ptr = rhs_index;
 			free_ast(exponent);
 			free_ast(rhs);
@@ -128,6 +128,20 @@ static ast_node *parse_term(char *arg, int *index_ptr)
 		if (new_term == NULL) {
 			free_ast(term);
 			free_ast(rhs);
+			return NULL;
+		}
+		term = new_term;
+	}
+	if (term->token == EXPONENT && term->left->token == VARIABLE) {
+		ast_node *one = ast_node_new(NUMBER, 1, NULL, NULL);
+		if (one == NULL) {
+			free(term);
+			return NULL;
+		}
+		ast_node *new_term = ast_node_new(MULTIPLICATION, 0, one, term);
+		if (new_term == NULL) {
+			free(term);
+			free(one);
 			return NULL;
 		}
 		term = new_term;
@@ -211,29 +225,12 @@ bool has_variables_in_parenthesis(char *arg)
 	return false;
 }
 
-static bool contain_variable(ast_node *node)
-{
-	if (node == NULL) {
-		return false;
-	}
-	if (node->token == VARIABLE) {
-		return true;
-	}
-	if (contain_variable(node->left)) {
-		return true;
-	}
-	if (contain_variable(node->right)) {
-		return true;
-	}
-	return false;
-}
-
 bool has_division_by_variables(ast_node *node)
 {
 	if (node == NULL) {
 		return false;
 	}
-	if (node->token == DIVISION && contain_variable(node->right)) {
+	if (node->token == DIVISION && contains_variable(node->right)) {
 		return true;
 	}
 	if (has_division_by_variables(node->left)) {
@@ -244,6 +241,61 @@ bool has_division_by_variables(ast_node *node)
 	}
 	return false;
 }
+
+int check_term(ast_node *node)
+{
+	ast_node *iter = node;
+	int variable_count = 0;
+	int i = 0;
+	while (iter->token == MULTIPLICATION || iter->token == DIVISION) {
+		i++;
+		iter = iter->left;
+	}
+	if (contains_variable(iter)) {
+		variable_count++;
+	}
+	while (i > 0) {
+		i--;
+		iter = node;
+		for (int j = i; j > 0; j--) {
+			iter = iter->left;
+		}
+		iter = iter->right;
+		if (contains_variable(iter)) {
+			variable_count++;
+		}
+	}
+	if (variable_count > 1) {
+		return -1;
+	}
+	return 0;
+}
+
+static int check_expression(ast_node *node)
+{
+	ast_node *iter = node;
+	int i = 0;
+	while (iter->token == ADDITION || iter->token == SUBSTRACTION) {
+		i++;
+		iter = iter->left;
+	}
+	if (check_term(iter) == -1) {
+		return -1;
+	}
+	while (i > 0) {
+		i--;
+		iter = node;
+		for (int j = i; j > 0; j--) {
+			iter = iter->left;
+		}
+		iter = iter->right;
+		if (check_term(iter) == -1) {
+			return -1;
+		}
+	}
+	return 0;
+}
+
 
 ast_node *parse_equation_arg(char *arg)
 {
@@ -272,6 +324,11 @@ ast_node *parse_equation_arg(char *arg)
 		return NULL;
 	} else if (has_division_by_variables(equation)) {
 		fprintf(stderr, "Does not support division by variables.\n");
+		free_ast(equation);
+		return NULL;
+	} else if (check_expression(equation->left) || check_expression(equation->right)) {
+		fprintf(stderr, "Does not support complex cases"
+				" with multiple variables in a single term.\n");
 		free_ast(equation);
 		return NULL;
 	}

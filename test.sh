@@ -38,11 +38,14 @@ computer "9999999999999999999999999999999999999999999999999999999999999999999999
 computer "-- = 0"
 computer "1^X = 0"
 computer "1^8.5 = 0"
+computer "1^-8 = 0"
 computer "1 + 1"
 computer "1 + 1 = 0 ="
+computer "= 1 + 1 = 0"
+echo
 
-# computer "X *  = 0"
-
+echo
+echo -e "${BOLD}Subject equations :$RESET"
 computer "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"
 computer "5 * X^0 + 4 * X^1 = 4 * X^0"
 computer "8 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 3 * X^0"
