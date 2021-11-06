@@ -8,7 +8,7 @@
 
 ast_node *ast_node_new(token token, double value, ast_node *left, ast_node *right)
 {
-	ast_node *new = xmalloc(sizeof(ast_node));
+	ast_node *new = malloc(sizeof(ast_node));
 	if (new == NULL) {
 		return NULL;
 	}
@@ -23,20 +23,20 @@ ast_node *ast_node_dup(ast_node *node)
 {
 	ast_node *dup = ast_node_new(node->token, node->value, NULL, NULL);
 	if (dup == NULL) {
-		return (NULL);
+		return NULL;
 	}
 	if (node->left) {
 		dup->left = ast_node_dup(node->left);
 		if (dup->left == NULL) {
 			free_ast(dup);
-			return (NULL);
+			return NULL;
 		}
 	}
 	if (node->right) {
 		dup->right = ast_node_dup(node->right);
 		if (dup->right == NULL) {
 			free_ast(dup);
-			return (NULL);
+			return NULL;
 		}
 	}
 	return dup;
@@ -63,7 +63,6 @@ ast_node *ast_node_cpy(ast_node *dest, ast_node *src)
 	}
 	if (src->right) {
 		if (dest->right) {
-			ast_node_cpy(dest->right, src->right);
 			if (ast_node_cpy(dest->right, src->right) == NULL) {
 				return NULL;
 			}

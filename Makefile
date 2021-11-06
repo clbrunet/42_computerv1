@@ -1,7 +1,7 @@
 NAME = computor
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -I./src/ -O0 -ggdb -Wno-unused-function -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I./src/
 
 SRCS = src/computerv1/main.c \
 			 src/computerv1/utils.c \

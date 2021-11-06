@@ -11,6 +11,11 @@ MAGENTA="\x1B[35m"
 CYAN="\x1B[36m"
 WHITE="\x1B[37m"
 
+if [[ "$1" == "valgrind" ]]; then
+  use_valgrind=1
+else
+  use_valgrind=0
+fi
 
 make
 
@@ -18,7 +23,11 @@ computor()
 {
   echo "================================================================================"
   echo -e "↓ $MAGENTA'$1'$RESET ↓"
-  ./computor "$1"
+  if [[ $use_valgrind -eq 1 ]]; then
+    valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./computor "$1"
+  else
+     ./computor "$1"
+  fi
   echo -e "↑ $MAGENTA'$1'$RESET ↑"
 }
 

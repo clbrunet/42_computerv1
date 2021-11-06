@@ -149,8 +149,14 @@ static int remove_zero(ast_node *operation, ast_node **parent_link, ast_node *ze
 				set_ast_node(operation, NUMBER, 1, NULL, NULL);
 			}
 			break;
-		case ADDITION:
 		case SUBSTRACTION:
+			if (is_left) {
+				operation->token = MULTIPLICATION;
+				operation->left->value = -1;
+				return 0;
+			}
+			// no break to execute addition case
+		case ADDITION:
 			*parent_link = zero_sibling;
 			free(zero);
 			free(operation);
@@ -262,6 +268,9 @@ static int reduce_term(ast_node *term)
 			term->left->right->value *= term->right->value;
 		}
 		ast_node *new_term_dup = ast_node_dup(term->left);
+		if (new_term_dup == NULL) {
+			return -1;
+		}
 		if (ast_node_cpy(term, new_term_dup) == NULL) {
 			free_ast(new_term_dup);
 			return -1;

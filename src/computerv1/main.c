@@ -9,20 +9,6 @@
 #include "computerv1/reduce_ast.h"
 #include "computerv1/solve_equation.h"
 
-int g_fail_malloc_at = 0;
-
-void *xmalloc(size_t size)
-{
-	static int number = 0;
-	number++;
-	if (number == g_fail_malloc_at) {
-		errno = ENOMEM;
-		return NULL;
-	} else {
-		return malloc(size);
-	}
-}
-
 static void print_help(char *executable)
 {
 	printf(BOLD FG_RED "NAME\n" RESET_ALL);

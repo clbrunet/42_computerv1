@@ -135,12 +135,12 @@ static ast_node *parse_term(char *arg, int *index_ptr)
 	if (term->token == EXPONENT && term->left->token == VARIABLE) {
 		ast_node *one = ast_node_new(NUMBER, 1, NULL, NULL);
 		if (one == NULL) {
-			free(term);
+			free_ast(term);
 			return NULL;
 		}
 		ast_node *new_term = ast_node_new(MULTIPLICATION, 0, one, term);
 		if (new_term == NULL) {
-			free(term);
+			free_ast(term);
 			free(one);
 			return NULL;
 		}

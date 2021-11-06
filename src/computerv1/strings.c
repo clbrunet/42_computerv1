@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "computerv1/main.h"
 
 char *strrmv(char *s, int c)
 {
