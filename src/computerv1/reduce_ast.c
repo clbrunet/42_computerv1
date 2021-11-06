@@ -352,8 +352,8 @@ static int reduce_expression(ast_node *expression)
 		return -1;
 	}
 	coefficient_node *max_x_exponent_node = search_max_x_exponent_node(coefficients);
-	ast_node *new_expression = coefficient_node_to_ast_term(max_x_exponent_node);
-	if (new_expression == NULL) {
+	ast_node *reduced_expression = coefficient_node_to_ast_term(max_x_exponent_node);
+	if (reduced_expression == NULL) {
 		free_coefficients(coefficients);
 		return -1;
 	}
@@ -364,27 +364,33 @@ static int reduce_expression(ast_node *expression)
 			coefficient_node_remove_node(&coefficients, max_x_exponent_node);
 			continue;
 		}
+		bool is_substraction = false;
+		if (max_x_exponent_node->value < 0) {
+			is_substraction = true;
+			max_x_exponent_node->value = -max_x_exponent_node->value;
+		}
 		ast_node *rhs = coefficient_node_to_ast_term(max_x_exponent_node);
 		if (rhs == NULL) {
 			free_coefficients(coefficients);
-			free_ast(new_expression);
+			free_ast(reduced_expression);
 			return -1;
 		}
-		ast_node *addition = ast_node_new(ADDITION, 0, new_expression, rhs);
-		if (addition == NULL) {
+		ast_node *new_reduced_expression = ast_node_new(
+				(is_substraction) ? SUBSTRACTION : ADDITION, 0, reduced_expression, rhs);
+		if (new_reduced_expression == NULL) {
 			free_coefficients(coefficients);
-			free_ast(new_expression);
+			free_ast(reduced_expression);
 			free_ast(rhs);
 			return -1;
 		}
-		new_expression = addition;
+		reduced_expression = new_reduced_expression;
 		coefficient_node_remove_node(&coefficients, max_x_exponent_node);
 	}
-	if (ast_node_cpy(expression, new_expression) == NULL) {
-		free_ast(new_expression);
+	if (ast_node_cpy(expression, reduced_expression) == NULL) {
+		free_ast(reduced_expression);
 		return -1;
 	}
-	free_ast(new_expression);
+	free_ast(reduced_expression);
 	return 0;
 }
 
