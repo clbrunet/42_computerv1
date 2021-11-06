@@ -34,5 +34,6 @@ void free_ast(ast_node *node);
 void free_ast_childs(ast_node *ast);
 char *ast_to_string(ast_node *node, ast_node *parent);
 bool contains_variable(ast_node *node);
+int get_reduced_expression_polynomial_degree(ast_node *expression);
 
 #endif

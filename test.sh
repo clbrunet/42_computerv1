@@ -14,39 +14,67 @@ WHITE="\x1B[37m"
 
 make
 
-computer()
+computor()
 {
   echo "================================================================================"
   echo -e "↓ $MAGENTA'$1'$RESET ↓"
-  ./computer "$1"
+  ./computor "$1"
   echo -e "↑ $MAGENTA'$1'$RESET ↑"
 }
 
 echo -e "${BOLD}Equation format errors :$RESET"
-computer "1 + -q = 0"
-computer "="
-computer "= 0"
-computer "0 ="
-computer "1 + = 0"
-computer "+ 1 = 0"
-computer "1 * = 0"
-computer "* 1 = 0"
-computer "1 ^ = 0"
-computer "^ 1 = 0"
-computer "1 + ( = 0"
-computer "99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999 = 0"
-computer "-- = 0"
-computer "1^X = 0"
-computer "1^8.5 = 0"
-computer "1^-8 = 0"
-computer "1 + 1"
-computer "1 + 1 = 0 ="
-computer "= 1 + 1 = 0"
+computor "1 + -q = 0"
+computor "="
+computor "= 0"
+computor "0 ="
+computor "1 + = 0"
+computor "+ 1 = 0"
+computor "1 * = 0"
+computor "* 1 = 0"
+computor "1 ^ = 0"
+computor "^ 1 = 0"
+computor "1 + ( = 0"
+computor "99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999 = 0"
+computor "-- = 0"
+computor "1^X = 0"
+computor "1^8.5 = 0"
+computor "1^-8 = 0"
+computor "1 + 1"
+computor "1 + 1 = 0 ="
+computor "= 1 + 1 = 0"
 echo
 
 echo
 echo -e "${BOLD}Subject equations :$RESET"
-computer "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"
-computer "5 * X^0 + 4 * X^1 = 4 * X^0"
-computer "8 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 3 * X^0"
-computer "5 + 4 * X + X^2= X^2"
+computor "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"
+computor "5 * X^0 + 4 * X^1 = 4 * X^0"
+computor "8 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 3 * X^0"
+computor "42 * X^0 = 42 * X^0"
+computor "5 + 4 * X + X^2= X^2"
+echo
+
+echo
+echo -e "${BOLD}0 degree equations :$RESET"
+computor "42 = 42"
+computor "0 = 42"
+computor "0 - 42 * X^0 = 42"
+echo
+
+echo
+echo -e "${BOLD}1 degree equations :$RESET"
+computor "X = 42"
+computor "42 = X"
+computor "X^1 = 42 * X^0"
+computor "2X - 2 = 0"
+echo
+
+echo
+echo -e "${BOLD}2 degree equations :$RESET"
+computor "X^2 = 42"
+computor "42 = X^2"
+computor "X^2 + X = 42"
+computor "42 = X^2 + X"
+computor "42 * X^2 + 42 * X^1 + 42 = 0"
+computor "-42 * X^2 - 42 * X^1 - 42 = 0"
+computor "-42 * X^2 = 0"
+computor "X^2 + 4X + 4 = 0"

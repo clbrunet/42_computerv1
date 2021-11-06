@@ -7,6 +7,7 @@
 #include "computerv1/ast.h"
 #include "computerv1/parse_equation_arg.h"
 #include "computerv1/reduce_ast.h"
+#include "computerv1/solve_equation.h"
 
 int g_fail_malloc_at = 0;
 
@@ -25,7 +26,7 @@ void *xmalloc(size_t size)
 static void print_help(char *executable)
 {
 	printf(BOLD FG_RED "NAME\n" RESET_ALL);
-	printf("\tcomputer - equation parser and solver\n");
+	printf("\tcomputor - equation parser and solver\n");
 
 	printf(BOLD FG_RED "\nUSAGE\n" RESET_ALL);
 	printf(BOLD "\t%s" RESET_ALL " [" UNDERLINED "OPTION" RESET_UNDERLINED
@@ -61,15 +62,36 @@ int main(int argc, char *argv[])
 	} else {
 		if (reduce_ast(ast) == -1) {
 			free_ast(ast);
-			return 3;
+			return 4;
 		}
 		char *string = ast_to_string(ast, NULL);
 		if (string == NULL) {
 			free_ast(ast);
-			return 4;
+			return 5;
 		}
-		printf("%s\n", string);
+		printf("Reduced form: %s\n", string);
 		free(string);
+		int polynomial_degree = get_reduced_expression_polynomial_degree(ast->left);
+		printf("Polynomial degree: %d\n", polynomial_degree);
+		switch (polynomial_degree) {
+			case 0:
+				solve_0_polynomial_degree_equation(ast);
+				break;
+			case 1:
+				if (solve_1_polynomial_degree_equation(ast) == -1) {
+					free_ast(ast);
+					return 6;
+				}
+				break;
+			case 2:
+				if (solve_2_polynomial_degree_equation(ast) == -1) {
+					free_ast(ast);
+					return 6;
+				}
+				break;
+			default:
+				printf("The polynomial degree is stricly greater than 2, I can't solve.\n");
+		}
 	}
 	free_ast(ast);
 	return 0;

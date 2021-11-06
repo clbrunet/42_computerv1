@@ -28,5 +28,6 @@ void coefficient_node_remove_x_eponent_node(coefficient_node **coefficients,
 		int x_exponent);
 
 ast_node *coefficient_node_to_ast_term(coefficient_node *node);
+coefficient_node *get_expression_coefficients(ast_node *expression);
 
 #endif

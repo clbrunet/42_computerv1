@@ -287,4 +287,14 @@ bool contains_variable(ast_node *node)
 	}
 	return false;
 }
-
+int get_reduced_expression_polynomial_degree(ast_node *expression)
+{
+	if (expression->token == NUMBER) {
+		return 0;
+	}
+	ast_node *iter = expression;
+	while (iter->token != MULTIPLICATION) {
+		iter = iter->left;
+	}
+	return iter->right->right->value;
+}

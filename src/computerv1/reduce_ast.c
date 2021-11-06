@@ -296,57 +296,11 @@ static int reduce_terms(ast_node *expression)
 	return 0;
 }
 
-static coefficient_node *get_expression_coefficients(ast_node *expression)
-{
-	coefficient_node *coefficients = NULL;
-	ast_node *iter = expression;
-	int i = 0;
-	while (iter->token == ADDITION || iter->token == SUBSTRACTION) {
-		i++;
-		iter = iter->left;
-	}
-	int x_exponent = get_reduced_term_x_exponent(iter);
-	double coefficient = get_reduced_term_coefficient(iter);
-	if (is_number_zero(coefficient) == false) {
-		coefficients = coefficient_node_new(x_exponent, coefficient, NULL);
-		if (coefficients == NULL) {
-			return NULL;
-		}
-	}
-	while (i > 0) {
-		i--;
-		iter = expression;
-		for (int j = i; j > 0; j--) {
-			iter = iter->left;
-		}
-		token operation = iter->token;
-		iter = iter->right;
-		x_exponent = get_reduced_term_x_exponent(iter);
-		coefficient = get_reduced_term_coefficient(iter);
-		if (is_number_zero(coefficient)) {
-			continue;
-		}
-		coefficient_node *x_exponent_node = search_x_exponent_node(coefficients, x_exponent);
-		if (operation == SUBSTRACTION) {
-			coefficient = -coefficient;
-		}
-		if (x_exponent_node) {
-			x_exponent_node->value += coefficient;
-			if (is_number_zero(x_exponent_node->value)) {
-				coefficient_node_remove_node(&coefficients, x_exponent_node);
-			}
-		} else {
-			if (coefficient_node_push_back(&coefficients, x_exponent, coefficient) == -1) {
-				free_coefficients(coefficients);
-				return NULL;
-			}
-		}
-	}
-	return coefficients;
-}
-
 static int reduce_expression(ast_node *expression)
 {
+	if (expression->token == NUMBER) {
+		return 0;
+	}
 	coefficient_node *coefficients = get_expression_coefficients(expression);
 	if (coefficients == NULL) {
 		return -1;
