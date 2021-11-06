@@ -4,9 +4,9 @@
 #include <stdbool.h>
 #include <string.h>
 #include <errno.h>
-#include "computerv1/style.h"
-#include "computerv1/ast.h"
-#include "computerv1/strings.h"
+#include "computorv1/style.h"
+#include "computorv1/ast.h"
+#include "computorv1/strings.h"
 
 static bool is_integer(double n)
 {

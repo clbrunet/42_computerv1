@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
-#include "computerv1/ast.h"
-#include "computerv1/utils.h"
-#include "computerv1/coefficient_node.h"
+#include "computorv1/ast.h"
+#include "computorv1/utils.h"
+#include "computorv1/coefficient_node.h"
 
 static void division_by_zero()
 {

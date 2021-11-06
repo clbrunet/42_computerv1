@@ -1,5 +1,5 @@
-#ifndef COMPUTERV1_AST_H
-#define COMPUTERV1_AST_H
+#ifndef COMPUTORV1_AST_H
+#define COMPUTORV1_AST_H
 
 #include <stdlib.h>
 #include <stdbool.h>

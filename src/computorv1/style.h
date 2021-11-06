@@ -1,5 +1,5 @@
-#ifndef COMPUTERV1_STYLE_H
-#define COMPUTERV1_STYLE_H
+#ifndef COMPUTORV1_STYLE_H
+#define COMPUTORV1_STYLE_H
 
 #define BOLD        "\e[1m"
 #define DIM         "\e[2m"

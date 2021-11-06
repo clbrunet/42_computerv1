@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "computerv1/utils.h"
-#include "computerv1/coefficient_node.h"
-#include "computerv1/ast.h"
-#include "computerv1/main.h"
+#include "computorv1/utils.h"
+#include "computorv1/coefficient_node.h"
+#include "computorv1/ast.h"
+#include "computorv1/main.h"
 
 coefficient_node *coefficient_node_new(int x_exponent, double value,
 		coefficient_node *next)

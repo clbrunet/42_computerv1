@@ -1,5 +1,5 @@
-#ifndef COMPUTERV1_OPTIONS_H
-#define COMPUTERV1_OPTIONS_H
+#ifndef COMPUTORV1_OPTIONS_H
+#define COMPUTORV1_OPTIONS_H
 
 #include <stdbool.h>	
 

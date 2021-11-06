@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include "computerv1/main.h"
-#include "computerv1/style.h"
-#include "computerv1/strings.h"
-#include "computerv1/ast.h"
+#include "computorv1/main.h"
+#include "computorv1/style.h"
+#include "computorv1/strings.h"
+#include "computorv1/ast.h"
 
 ast_node *ast_node_new(token token, double value, ast_node *left, ast_node *right)
 {

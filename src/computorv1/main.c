@@ -1,13 +1,13 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "computerv1/style.h"
-#include "computerv1/options.h"
-#include "computerv1/parse_option_args.h"
-#include "computerv1/ast.h"
-#include "computerv1/parse_equation_arg.h"
-#include "computerv1/reduce_ast.h"
-#include "computerv1/solve_equation.h"
+#include "computorv1/style.h"
+#include "computorv1/options.h"
+#include "computorv1/parse_option_args.h"
+#include "computorv1/ast.h"
+#include "computorv1/parse_equation_arg.h"
+#include "computorv1/reduce_ast.h"
+#include "computorv1/solve_equation.h"
 
 static void print_help(char *executable)
 {

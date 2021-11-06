@@ -1,8 +1,0 @@
-#ifndef COMPUTERV1_PARSE_OPTION_ARGS_H
-#define COMPUTERV1_PARSE_OPTION_ARGS_H
-
-#include "computerv1/options.h"
-
-int parse_option_args(int argc, char *argv[], options *options);
-
-#endif

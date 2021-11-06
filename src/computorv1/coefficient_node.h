@@ -1,8 +1,8 @@
-#ifndef COMPUTERV1_COEFFICIENT_NODE_H
-#define COMPUTERV1_COEFFICIENT_NODE_H
+#ifndef COMPUTORV1_COEFFICIENT_NODE_H
+#define COMPUTORV1_COEFFICIENT_NODE_H
 
 #include <stdlib.h>
-#include "computerv1/ast.h"
+#include "computorv1/ast.h"
 
 typedef struct coefficient_node {
 	int x_exponent;

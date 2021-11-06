@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "computerv1/options.h"
-#include "computerv1/style.h"
+#include "computorv1/options.h"
+#include "computorv1/style.h"
 
 static int parse_option_arg(char *arg, options *options)
 {

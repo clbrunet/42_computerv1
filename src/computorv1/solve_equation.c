@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "computerv1/strings.h"
-#include "computerv1/utils.h"
-#include "computerv1/ast.h"
-#include "computerv1/coefficient_node.h"
+#include "computorv1/strings.h"
+#include "computorv1/utils.h"
+#include "computorv1/ast.h"
+#include "computorv1/coefficient_node.h"
 
 void solve_0_polynomial_degree_equation(ast_node *ast)
 {
