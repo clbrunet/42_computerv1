@@ -56,7 +56,17 @@ int solve_2_polynomial_degree_equation(ast_node *ast)
 	free_coefficients(coefficients);
 	double discriminant = b * b - 4 * a * c;
 	if (discriminant < 0) {
-		printf("Discriminant is strictly negative, there are no solutions.\n");
+		char *solution_lhs = dtoa(-b / (2 * a));
+		char *solution_rhs = dtoa(ft_sqrt(-discriminant) / (2 * a));
+		if (solution_lhs == NULL || solution_rhs == NULL) {
+			free(solution_lhs);
+			free(solution_rhs);
+			return -1;
+		}
+		printf("Discriminant is strictly negative, the two complex solutions are:\n"
+				"%s - %si\n%s + %si\n", solution_lhs, solution_rhs, solution_lhs, solution_rhs);
+		free(solution_lhs);
+		free(solution_rhs);
 	} else if (is_number_zero(discriminant)) {
 		char *solution = dtoa(-b / 2 * a);
 		if (solution == NULL) {
