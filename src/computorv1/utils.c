@@ -18,6 +18,9 @@ bool is_numbers_equals(double n1, double n2)
 
 double ft_sqrt(double x)
 {
+	if (x < 0) {
+		return -1;
+	}
 	double sqrt = x / 2;
 	double next_x_divisor = 4;
 	double x_10_exponent_7 = x * 10000000;
