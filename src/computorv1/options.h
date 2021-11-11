@@ -5,7 +5,6 @@
 
 typedef struct options
 {
-	bool help;
 	bool tree;
 } options;
 

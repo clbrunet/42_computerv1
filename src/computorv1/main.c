@@ -19,8 +19,6 @@ static void print_help(char *executable)
 			"]... " UNDERLINED "EQUATION" RESET_UNDERLINED "\n", executable);
 
 	printf(BOLD FG_RED "\nOPTIONS\n" RESET_ALL);
-	printf(BOLD FG_MAGENTA "\t-h," FG_DEFAULT " --help\n" RESET_ALL
-			"\t\tPrint help information.\n");
 	printf(BOLD FG_MAGENTA "\t-t," FG_DEFAULT " --tree\n" RESET_ALL
 			"\t\tPrint equation tree.\n");
 }
@@ -34,10 +32,6 @@ int main(int argc, char *argv[])
 	options options = {0};
 	if (parse_option_args(argc, argv, &options) == -1) {
 		return 2;
-	}
-	if (options.help) {
-		print_help(argv[0]);
-		return 0;
 	}
 	ast_node *ast = parse_equation_arg(argv[argc - 1]);
 	if (ast == NULL) {
