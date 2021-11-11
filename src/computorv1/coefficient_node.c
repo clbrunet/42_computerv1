@@ -147,25 +147,19 @@ void coefficient_node_remove_x_eponent_node(coefficient_node **coefficients,
 
 ast_node *coefficient_node_to_ast_term(coefficient_node *node)
 {
-	ast_node *term = ast_node_new(NUMBER, node->value, NULL, NULL);
-	if (term == NULL) {
+	ast_node *number = ast_node_new(NUMBER, node->value, NULL, NULL);
+	ast_node *variable = ast_node_new(VARIABLE, 0, NULL, NULL);
+	ast_node *exponent_number = ast_node_new(NUMBER, node->x_exponent, NULL, NULL);
+	ast_node *exponent = ast_node_new(EXPONENT, 0, variable, exponent_number);
+	ast_node *term = ast_node_new(MULTIPLICATION, 0, number, exponent);
+	if (number == NULL || variable == NULL || exponent_number == NULL
+		|| exponent == NULL || term == NULL) {
+		free(number);
+		free(variable);
+		free(exponent_number);
+		free(exponent);
+		free(term);
 		return NULL;
-	}
-	if (node->x_exponent > 0) {
-		ast_node *variable = ast_node_new(VARIABLE, 0, NULL, NULL);
-		ast_node *exponent_number = ast_node_new(NUMBER, node->x_exponent, NULL, NULL);
-		ast_node *exponent = ast_node_new(EXPONENT, 0, variable, exponent_number);
-		ast_node *multiplication = ast_node_new(MULTIPLICATION, 0, term, exponent);
-		if (variable == NULL || exponent_number == NULL || exponent == NULL
-			|| multiplication == NULL) {
-			free(term);
-			free(variable);
-			free(exponent_number);
-			free(exponent);
-			free(multiplication);
-			return NULL;
-		}
-		term = multiplication;
 	}
 	return term;
 }
