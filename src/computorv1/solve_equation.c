@@ -68,7 +68,7 @@ int solve_2_polynomial_degree_equation(ast_node *ast)
 		free(solution_lhs);
 		free(solution_rhs);
 	} else if (is_number_zero(discriminant)) {
-		char *solution = dtoa(-b / 2 * a);
+		char *solution = dtoa(-b / (2 * a));
 		if (solution == NULL) {
 			return -1;
 		}
