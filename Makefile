@@ -1,7 +1,7 @@
-NAME = computor
+TARGET = computor
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -I./src/
+CFLAGS = -Wall -Wextra -Werror -I./src/ -MMD -MP
 
 SRCS = src/computorv1/main.c \
 			 src/computorv1/utils.c \
@@ -14,17 +14,20 @@ SRCS = src/computorv1/main.c \
 			 src/computorv1/strings.c
 
 OBJS = $(SRCS:.c=.o)
+DEPS = $(SRCS:.c=.d)
 
-all: $(NAME)
+all: $(TARGET)
 
-$(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(CFLAGS) $(OBJS)
+-include $(DEPS)
+
+$(TARGET): $(OBJS)
+	$(CC) -o $(TARGET) $(CFLAGS) $(OBJS)
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(TARGET)
 
 re: fclean all
 
