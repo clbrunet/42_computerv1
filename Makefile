@@ -2,7 +2,6 @@ TARGET = computor
 
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -I./src/
-DEPSFLAGS = -MMD -MP -MF $(@:.o=.d)
 
 SRCS = src/computorv1/main.c \
 			 src/computorv1/utils.c \
@@ -23,7 +22,7 @@ all: $(TARGET)
 -include $(DEPS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(DEPSFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -MMD -MP -MF $(<:.c=.d) -o $@ -c $<
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
