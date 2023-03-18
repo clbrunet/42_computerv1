@@ -1,2 +1,2 @@
-# 42_computorv1
+# computorv1
 Project to try `Recursive descent parser`
